@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+
+    // Defines the JavaScript version that TypeScript will compile to
+    "target": "ES2020",
+
+    // Defines the module system used by Node.js
+    "module": "commonjs",
+
+    // Folder where TypeScript source files are located
+    "rootDir": "./src",
+
+    // Folder where compiled JavaScript files will be generated
+    "outDir": "./dist",
+
+    // Enables strict type checking for safer code
+    "strict": true,
+
+    // Allows default imports from CommonJS modules
+    "esModuleInterop": true,
+
+    // Improves compatibility between different operating systems
+    "forceConsistentCasingInFileNames": true,
+
+    // Skips type checking of external libraries
+    "skipLibCheck": true
+  },
+
+  // Include only application source code
+  "include": [
+    "src"
+  ],
+
+  // Ignore dependencies
+  "exclude": [
+    "node_modules"
+  ]
+}
