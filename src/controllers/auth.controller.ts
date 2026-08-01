@@ -4,16 +4,16 @@
 // ==================================================
 
 import { Request, Response } from "express";
-
 import { registerUser } from "../services/auth.service";
-
+import { RegisterUserDto } from "../dto/user.dto";
 
 // Register new user controller
 export const register = async ( req: Request, res: Response ) => {
 
     try {
-        const { username, email, password } = req.body;
-        const { user, token } = await registerUser(username, email, password);
+          // Convert request body into a typed DTO object
+        const userData: RegisterUserDto = req.body;
+        const { user, token } = await registerUser(userData);
 
         res.status(201).json({
 
