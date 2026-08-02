@@ -4,8 +4,8 @@
 // ==================================================
 
 import { Request, Response } from "express";
-import { registerUser } from "../services/auth.service";
-import { RegisterUserDto } from "../dto/user.dto";
+import { registerUser, loginUser } from "../services/auth.service";
+import { RegisterUserDto, LoginUserDto } from "../dto/user.dto";
 
 // Register new user controller
 export const register = async ( req: Request, res: Response ) => {
@@ -40,6 +40,47 @@ export const register = async ( req: Request, res: Response ) => {
                     : "Registration failed"
 
         });
+    }
+
+};
+
+// Login existing user controller
+export const login = async ( req: Request, res: Response ) => {
+
+    try {
+
+        // Convert request body into a typed DTO object
+        const userData: LoginUserDto = req.body;
+
+        const { user, token } = await loginUser(userData);
+
+        res.status(200).json({
+
+            message: "Login successful",
+
+            user: {
+
+                id: user._id,
+                username: user.username,
+                email: user.email
+
+            },
+
+            token
+
+        });
+
+    } catch (error) {
+
+        res.status(400).json({
+
+            message:
+                error instanceof Error
+                    ? error.message
+                    : "Login failed"
+
+        });
+
     }
 
 };
