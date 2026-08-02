@@ -15,3 +15,13 @@ export const generateToken = (userId: string): string => {
     );
 
 };
+
+// Verify JWT token
+export const verifyToken = ( token: string ) => {
+
+    return jwt.verify(
+        token,
+        env.JWT_SECRET
+    );
+
+};
