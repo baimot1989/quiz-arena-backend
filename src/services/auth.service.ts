@@ -9,6 +9,7 @@ import { createUser, findUserByEmail } from "../repositories/user.repository";
 
 import { generateToken } from "../utils/jwt";
 import { RegisterUserDto, LoginUserDto } from "../dto/user.dto";
+import { createProfile } from "./profile.service";
 
 
 // Register new user
@@ -34,6 +35,24 @@ export const registerUser = async (
 
     // Create new user in database
     const user = await createUser({ username, email, passwordHash });
+
+    // Create user profile
+    try {
+
+        
+        await createProfile(
+            user._id.toString()
+        );
+
+
+    } catch (error) {
+
+        // Remove user if profile creation fails
+        await user.deleteOne();
+
+        throw error;
+
+    }
 
     // Generate authentication token
     const token = generateToken(
@@ -70,7 +89,7 @@ export const loginUser = async (
     }
 
     // Generate authentication token
-    const token = generateToken( user._id.toString() );
+    const token = generateToken(user._id.toString());
 
     // Return user data and JWT token
     return {
