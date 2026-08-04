@@ -5,7 +5,7 @@
 
 import { Request, Response } from "express";
 
-import { getProfile } from "../services/profile.service";
+import { getProfile, updateProfilePreferences } from "../services/profile.service";
 
 
 // Get current user profile
@@ -47,6 +47,51 @@ export const getMyProfile = async (req: Request, res: Response) => {
                 error instanceof Error
                     ? error.message
                     : "Profile not found"
+
+        });
+
+    }
+
+};
+
+// Update current user profile preferences
+export const updatePreferences = async ( req: Request, res: Response ) => {
+
+    try {
+
+        const userId = req.user?.userId;
+
+        if (!userId) {
+
+            return res.status(401).json({
+
+                message: "Unauthorized"
+
+            });
+
+        }
+
+        const profile = await updateProfilePreferences(
+            userId,
+            req.body
+        );
+
+        res.status(200).json({
+
+            message: "Preferences updated successfully",
+
+            profile
+
+        });
+
+    } catch (error) {
+
+        res.status(400).json({
+
+            message:
+                error instanceof Error
+                    ? error.message
+                    : "Update failed"
 
         });
 

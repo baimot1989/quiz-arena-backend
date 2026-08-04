@@ -27,9 +27,11 @@ export interface IProfile extends Document {
 
     userId: mongoose.Types.ObjectId;
 
-    avatar?: string;
+    avatar?: string | null;
 
     rating: number;
+
+    favoriteCategories: string[];
 
     statistics: IProfileStatistics;
 
@@ -53,18 +55,23 @@ const profileSchema = new Schema<IProfile>(
             unique: true
         },
 
-
         avatar: {
             type: String,
             default: null
         },
 
+        favoriteCategories: {
+
+            type: [String],
+
+            default: []
+
+        },
 
         rating: {
             type: Number,
             default: 1000
         },
-
 
         statistics: {
 
@@ -117,4 +124,4 @@ const profileSchema = new Schema<IProfile>(
 );
 
 // Export Profile model
-export const Profile = mongoose.model<IProfile>( "Profile", profileSchema );
+export const Profile = mongoose.model<IProfile>("Profile", profileSchema);
