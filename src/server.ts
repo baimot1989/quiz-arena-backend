@@ -19,6 +19,7 @@ import { connectDatabase } from "./config/database";
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 import profileRoutes from "./routes/profile.routes";
+import questionRoutes from "./routes/question.routes";
 
 // Initialize environment configuration
 dotenv.config();
@@ -38,6 +39,8 @@ app.use( "/api/auth", authRoutes );
 app.use( "/api/users", userRoutes);
 // Profile routes
 app.use( "/api/profile", profileRoutes);
+// Question routes
+app.use( "/api/questions", questionRoutes);
 
 // Basic health check route
 // Used to verify that the server is running
