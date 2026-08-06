@@ -134,3 +134,136 @@ export const deleteQuestion = async (
     return question;
 
 };
+
+// ==================================================
+// Select random questions from a given list
+// Purpose:
+// Returns a specific amount of random questions
+// ==================================================
+
+export const getRandomQuestions = (questions: any[], amount: number) => {
+
+
+    const shuffledQuestions = [...questions].sort(
+
+        () => Math.random() - 0.5
+    );
+
+
+    return shuffledQuestions.slice(
+        0,
+        amount
+    );
+
+};
+
+// ==================================================
+// Convert Question document into Game snapshot format
+//
+// Purpose:
+// Creates a copy of the question data that will be stored
+// inside a game session.
+//
+// The snapshot keeps the question unchanged even if the
+// original question is updated later.
+// ==================================================
+
+export const mapQuestionToGameQuestion = (question: any) => {
+
+    return {
+
+        questionId: question._id,
+
+        questionText: question.questionText,
+
+        answers: question.answers,
+
+        correctAnswer: question.correctAnswer,
+
+        explanation: question.explanation,
+
+        category: question.category,
+
+        difficulty: question.difficulty
+
+    };
+
+};
+
+// ==================================================
+// Get questions for a game session
+// Purpose:
+// Creates the default Quiz Arena question set
+//
+// Rules:
+// - 4 easy questions
+// - 4 medium questions
+// - 2 hard questions
+//
+// Returns:
+// A mixed array of 10 questions
+// ==================================================
+
+export const getGameQuestions = async () => {
+
+
+    const easyQuestions =
+        await findQuestionsByDifficulty(
+            "easy"
+        );
+
+
+    const mediumQuestions =
+        await findQuestionsByDifficulty(
+            "medium"
+        );
+
+
+    const hardQuestions =
+        await findQuestionsByDifficulty(
+            "hard"
+        );
+
+
+
+    const selectedEasy =
+        getRandomQuestions(
+            easyQuestions,
+            4
+        );
+
+
+    const selectedMedium =
+        getRandomQuestions(
+            mediumQuestions,
+            4
+        );
+
+
+    const selectedHard =
+        getRandomQuestions(
+            hardQuestions,
+            2
+        );
+
+
+
+    const gameQuestions = [
+
+        ...selectedEasy,
+        ...selectedMedium,
+        ...selectedHard
+
+    ];
+
+
+
+    return gameQuestions
+        .sort(
+            () => Math.random() - 0.5
+        )
+        .map(
+            mapQuestionToGameQuestion
+        );
+
+};

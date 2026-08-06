@@ -1,5 +1,5 @@
 // ==================================================
-// File: request.types.ts
+// File: route.types.ts
 // Purpose: Shared request types
 // ==================================================
 
@@ -21,3 +21,5 @@ export interface QuestionDifficultyParams {
     difficulty: string;
 
 }
+
+export interface GameIdParams { id: string; }

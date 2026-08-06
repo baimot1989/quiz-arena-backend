@@ -20,6 +20,7 @@ import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 import profileRoutes from "./routes/profile.routes";
 import questionRoutes from "./routes/question.routes";
+import gameRoutes from "./routes/game.routes";
 
 // Initialize environment configuration
 dotenv.config();
@@ -41,6 +42,9 @@ app.use( "/api/users", userRoutes);
 app.use( "/api/profile", profileRoutes);
 // Question routes
 app.use( "/api/questions", questionRoutes);
+// Game routes
+app.use( "/api/games", gameRoutes);
+
 
 // Basic health check route
 // Used to verify that the server is running
